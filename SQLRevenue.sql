@@ -28,14 +28,14 @@ from revenue.. revenue;
 	from revenue..revenue;
 
 
--- Verificando quantas impressões são realizadas diariamente, por adgroup
+-- 1-Verificando quantas impressões são realizadas diariamente, por adgroup
 
 select date, ad_group, sum(impressions) as impressions
 from revenue..revenue
 group by date, ad_group
 order by date;
 
--- click rating por groupo a cada dia
+-- 2-click rating por groupo a cada dia
 alter table revenue..revenue
 alter column clicks int;
 
@@ -48,15 +48,24 @@ from rating
 order by date;
 
 
--- Verificando se quanto maior o custo mais conversões são obtidas
+-- 3-Verificando se quanto maior o custo mais conversões são obtidas
 select cost, conversions
 from revenue..revenue
 order by cost desc;
 
 
--- Analisando se quanto maior o click rating maior é a conversão
+-- 4-Analisando se quanto maior o click rating maior é a conversão
 select Round(((Convert(decimal(5,1), clicks))/impressions),2) as click_rating, conversions
 from revenue..revenue
 order by click_rating desc;
 
---
+-- 5-ad group com maior revenue
+select ad_group, sum(convert(decimal(18,2),revenue)) as revenue
+from revenue..revenue
+group by ad_group;
+
+-- 6-rating de revenue por impressão em cada grupo
+select ad_group, sum(convert(decimal(18,2),revenue))/sum(impressions) as revenue_per_impression
+from revenue..revenue
+group by ad_group
+order by 2 desc;
