@@ -48,14 +48,14 @@ from rating
 order by date;
 
 
--- 3-Verificando se quanto maior o custo mais conversões são obtidas
-select cost, conversions
+-- 3-Verificando se quanto maior o custo por impressão mais conversões são obtidas
+select (Convert(decimal(8,2), cost)/impressions) as cost_per_impression, conversions
 from revenue..revenue
-order by cost desc;
+order by 1 desc;
 
 
 -- 4-Analisando se quanto maior o click rating maior é a conversão
-select Round(((Convert(decimal(5,1), clicks))/impressions),2) as click_rating, conversions
+select ((Round(Convert(decimal(18,2),2), clicks)/impressions)) as click_rating, conversions
 from revenue..revenue
 order by click_rating desc;
 
